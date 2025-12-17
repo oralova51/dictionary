@@ -6,3 +6,34 @@ const axiosInstance = axios.create({
 });
 
 export default axiosInstance;
+
+let accessToken = "";
+
+function setAccessToken(newToken) {
+  accessToken = newToken;
+}
+
+// отправляем запрос и проверяем наличие заголовков авторизации и токена в загловке
+axiosInstance.interceptors.request.use((config) => {
+  if (!config.headers.Authorization) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
+  }
+  return config;
+});
+
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const prevRequest = error.config;
+    if (error.response.status === 403 && !prevRequest.sent) {
+      const response = await axiosInstance("/api/auth/refreshTokens");
+      accessToken = response.data.data.accessToken;
+      prevRequest.sent = true;
+      prevRequest.headers.Authorization = `Bearer ${accessToken}`;
+      return axiosInstance(prevRequest);
+    }
+    return Promise.reject(error);
+  }
+);
+
+export { setAccessToken };
