@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
-import axiosInstance from "../shared/lib/axiosInstance";
-import Row from "react-bootstrap/Row";
-import Button from "react-bootstrap/esm/Button";
+import WordCard from "../widgets/WordCard";
+import "./WordsPage.css";
 
 export default function WordsPage() {
-  const [words, setWords] = useState({});
+  const [words, setWords] = useState([]);
 
   async function getWords() {
     try {
-      console.log(import.meta.env.VITE_API);
-      
-      const response = await fetch(import.meta.env.VITE_API + '/words');
-      console.log(response);
+      const response = await fetch(`${import.meta.env.VITE_API}/dictionary`);
+      const data = await response.json();
+      if (response.ok) setWords(data.data);
     } catch (error) {
       console.log(error);
     }
@@ -21,5 +19,7 @@ export default function WordsPage() {
     getWords();
   }, []);
 
-  return <div>Привет</div>;
+  return <div>{words.map((obj) => (
+          <WordCard key={obj.id} word={obj} />
+        ))}</div>;
 }
