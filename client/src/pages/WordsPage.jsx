@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import WordCard from "../widgets/WordCard";
-import "./WordsPage.css";
+import WordCard from "../widgets/WordCard/WordCard";
 
 export default function WordsPage() {
   const [words, setWords] = useState([]);

@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from "react-router";
 import './App.css'
 import WordsPage from './pages/WordsPage';
+import Layout from "./app/Layout/Layout";
+import MainPage from './pages/MainPage';
 
 
 function App() {
@@ -9,10 +11,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route element={<Layout />}> */}
-          {/* <Route path="/" element={<MainPage />} /> */}
+        <Route element={<Layout />}>
+          <Route path="/" element={<MainPage />} />
           <Route path="/words" element={<WordsPage />} />
-        {/* </Route> */}
+        </Route>
       </Routes>
     </BrowserRouter>
   )
