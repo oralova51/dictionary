@@ -1,4 +1,5 @@
 'use strict';
+
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Dictionary extends Model {
@@ -10,15 +11,48 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
+
+    static validate({ word, description, tag, userId }) {
+      if (!word || typeof word !== 'string' || word.trim().length === 0) {
+        return {
+          isValid: false,
+          err: 'Название должно быть не пустой строкой',
+        };
+      }
+      if (
+        !description ||
+        typeof description !== 'string' ||
+        description.trim().length === 0
+      ) {
+        return {
+          isValid: false,
+          err: 'Описание должно быть не пустой строкой',
+        };
+      }
+      if (!tag || typeof tag !== 'string' || tag.trim().length === 0) {
+        return {
+          isValid: false,
+          err: 'Тег должен быть не пустой строкой',
+        };
+      }
+      return {
+        isValid: true,
+        err: null,
+      };
+    }
   }
-  Dictionary.init({
-    word: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    tag: DataTypes.STRING,
-    userId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Dictionary',
-  });
+
+  Dictionary.init(
+    {
+      word: DataTypes.STRING,
+      description: DataTypes.TEXT,
+      tag: DataTypes.STRING,
+      userId: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: 'Dictionary',
+    },
+  );
   return Dictionary;
 };
