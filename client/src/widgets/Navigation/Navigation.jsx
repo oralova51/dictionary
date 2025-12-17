@@ -1,15 +1,15 @@
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 
-function TextLinkExample() {
+function Navigation() {
   return (
     <Navbar className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="#home">Navbar with text</Navbar.Brand>
+        <Navbar.Brand href="#home">Coding Wiki</Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
-            Signed in as: <a href="#login">Mark Otto</a>
+            Вы вошли как: <a href="#login">Вася Пупкин</a>
           </Navbar.Text>
         </Navbar.Collapse>
       </Container>
@@ -17,4 +17,4 @@ function TextLinkExample() {
   );
 }
 
-export default TextLinkExample;
+export default Navigation;

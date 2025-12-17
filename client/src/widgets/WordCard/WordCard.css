@@ -1,15 +1,20 @@
-h1{
-    text-align: center;
+h1 {
+  text-align: center;
 }
 
-.words{
-    display: flex;
-    flex-direction: row;
-    flex-wrap:wrap;
-    padding: 10px;
-    margin: 15px;
+.words {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 10px;
+  margin: 15px;
 }
 
-.word{
-    padding: 10px;
+.word {
+  padding: 10px;
+}
+
+.wordsButtons {
+  margin-bottom: 5px;
+  padding-bottom: 5px;
 }
