@@ -6,41 +6,8 @@ import React from "react";
 import axiosInstance from "../shared/lib/axiosInstance";
 
 export default function LoginPage() {
-  const getCookieHandler = async () => {
-    try {
-      const response = await axiosInstance("/api/auth/cookie");
-
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const deleteCookieHandler = async () => {
-    try {
-      const response = await axiosInstance.delete("/api/auth/cookie");
-
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const getMyCookieHandler = async () => {
-    try {
-      const response = await axiosInstance("/api/auth/mycookie");
-
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <>
-      <ButtonGroup>
-        <Button onClick={getCookieHandler}>Получить куку</Button>
-        <Button onClick={deleteCookieHandler}>Удалить куку</Button>
-        <Button onClick={getMyCookieHandler}>Увидеть куку</Button>
-      </ButtonGroup>
       <Form>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Логин</Form.Label>

@@ -37,13 +37,14 @@ class AuthController {
           accessToken,
         });
     } catch (error) {
+      console.log(error);
       return res.status(500).send(error);
     }
   }
 
   static async login(req, res) {
     const { email, password } = req.body;
-    const { isValid, err } = User.validateSignUpData({ email, password });
+    const { isValid, err } = User.validateLoginData({ email, password });
 
     if (!isValid) return res.status(400).send(err);
     try {
@@ -70,15 +71,35 @@ class AuthController {
           accessToken,
         });
     } catch (error) {
+      console.log(error);
       return res.status(500).send(error);
     }
   }
 
   static async logout(req, res) {
     try {
-      return res.clearCookes().status(200).send('Выход выполнен/Logout success');
+      return res
+        .clearCookie('refreshToken', cookieConfig.refresh)
+        .status(200)
+        .send('Выход выполнен/Logout success');
     } catch (error) {
+      console.log(error);
       return res.status(500).send(error);
+    }
+  }
+
+  static async refreshToken(req, res) {
+    try {
+      const { user } = res.locals;
+      const { accessToken, refreshToken } = generateTokens({ user });
+
+      res
+        .cookie('refreshToken', refreshToken, cookieConfig.refresh)
+        .status(200)
+        .send({ message: 'Успешно/Success', user, accessToken });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error);
     }
   }
 }

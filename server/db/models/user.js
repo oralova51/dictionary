@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
       ) {
         return {
           isValid: false,
-          error: 'Email не должен быть пустым и должен быть валидным',
+          err: 'Email не должен быть пустым и должен быть валидным',
         };
       }
 
@@ -53,14 +53,13 @@ module.exports = (sequelize, DataTypes) => {
       ) {
         return {
           isValid: false,
-          error:
-            'Пароль не должен быть пустым, должен содержать хотя бы одну цифру, одну заглавную букву, одну строчную букву, один специальный символ и быть не менее 8 символов',
+          err: 'Пароль не должен быть пустым, должен содержать хотя бы одну цифру, одну заглавную букву, одну строчную букву, один специальный символ и быть не менее 8 символов',
         };
       }
 
       return {
         isValid: true,
-        error: null,
+        err: null,
       };
     }
 
@@ -68,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
       if (!name || typeof name !== 'string' || name.trim().length === 0) {
         return {
           isValid: false,
-          error: 'Поле name не должно быть пустым',
+          err: 'Поле name не должно быть пустым',
         };
       }
 
@@ -80,7 +79,7 @@ module.exports = (sequelize, DataTypes) => {
       ) {
         return {
           isValid: false,
-          error: 'Email должен быть валидным',
+          err: 'Email должен быть валидным',
         };
       }
 
@@ -92,14 +91,13 @@ module.exports = (sequelize, DataTypes) => {
       ) {
         return {
           isValid: false,
-          error:
-            'Пароль не должен быть пустым, должен содержать одну большую букву, одну маленькую, один специальный символ, и не должен быть короче 8 символов',
+          err: 'Пароль не должен быть пустым, должен содержать одну большую букву, одну маленькую, один специальный символ, и не должен быть короче 8 символов',
         };
       }
 
       return {
         isValid: true,
-        error: null,
+        err: null,
       };
     }
   }

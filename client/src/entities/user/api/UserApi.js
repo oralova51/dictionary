@@ -1,6 +1,7 @@
 import axiosInstance from "../../../shared/lib/axiosInstance";
 
 const API_AUTH_URL = "/api/auth";
+
 export default class UserApi {
   static async signup(userData) {
     const { data } = await axiosInstance.post(

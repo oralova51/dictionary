@@ -2,18 +2,23 @@ import React from "react";
 import styles from "./SignUpForm.module.css";
 import UserValidate from "../../entities/user/api/UserValidate";
 import UserApi from "../../entities/user/api/UserApi";
+import { useNavigate } from "react-router";
 import { setAccessToken } from "../../shared/lib/axiosInstance";
 
 function SignUpForm({ setUser }) {
+  const navigate = useNavigate();
+
   const signUpHandler = async (event) => {
     try {
       event.preventDefault();
       const formData = Object.fromEntries(new FormData(event.target));
       const { isValid, error } = UserValidate.validateSignUpData(formData);
+
       if (!isValid) return alert(error);
       const res = await UserApi.signup(formData);
-      setUser({ status: "logged", data: res.data.user });
-      setAccessToken(data.data.accessToken);
+
+      setUser({ status: "logged", data: res.user });
+      setAccessToken(data.accessToken);
     } catch (error) {
       console.log(error);
     }
@@ -48,7 +53,13 @@ function SignUpForm({ setUser }) {
             required
           />
         </div>
-        <button type="submit" className={styles.submitButton}>
+        <button
+          type="submit"
+          className={styles.submitButton}
+          onClick={() => {
+            navigate(`/dictionary`);
+          }}
+        >
           Подтвердить
         </button>
       </form>
