@@ -3,8 +3,9 @@ import styles from "./SignUpForm.module.css";
 import UserValidate from "../../entities/user/api/UserValidate";
 import UserApi from "../../entities/user/api/UserApi";
 import { useNavigate } from "react-router";
+import { setAccessToken } from "../../shared/lib/axiosInstance";
 
-function SignUpForm(setUser) {
+function SignUpForm({ setUser }) {
   const navigate = useNavigate();
 
   const signUpHandler = async (event) => {
@@ -16,7 +17,8 @@ function SignUpForm(setUser) {
       if (!isValid) return alert(error);
       const res = await UserApi.signup(formData);
 
-      setUser({ status: "logged", data: res.data.user });
+      setUser({ status: "logged", data: res.user });
+      setAccessToken(data.accessToken);
     } catch (error) {
       console.log(error);
     }
@@ -55,8 +57,7 @@ function SignUpForm(setUser) {
           type="submit"
           className={styles.submitButton}
           onClick={() => {
-            //TODO: сделать переход на главную страницу
-            navigate(`/api/dictionary/1`);
+            navigate(`/dictionary`);
           }}
         >
           Подтвердить

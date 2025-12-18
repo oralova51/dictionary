@@ -1,23 +1,33 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router";
+import Layout from "./app/Layout/Layout";
 import MainPage from "./pages/MainPage";
 import AuthPage from "./pages/AuthPage";
+import axiosInstance, { setAccessToken } from "./shared/lib/axiosInstance";
 
 function App() {
   const [user, setUser] = useState({ status: "logging", data: null });
 
   useEffect(() => {
-    setUser();
+    axiosInstance("/api/auth/refreshToken")
+      .then(({ data }) => {
+        setUser({ status: "logged", data: data.user });
+        setAccessToken(data.accessToken);
+      })
+      .catch(() => {
+        setUser({ status: "guest", data: null });
+        setAccessToken("");
+      });
   }, []);
 
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route>
-            <Route path="/register" element={<AuthPage setUser={setUser} />} />
+          <Route element={<Layout user={user} setUser={setUser} />}>
             <Route path="/" element={<MainPage user={user} />} />
+            <Route path="/registery" element={<AuthPage setUser={setUser} />} />
           </Route>
         </Routes>
       </BrowserRouter>
