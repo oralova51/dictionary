@@ -5,7 +5,7 @@ const { Dictionary } = require("../../db/models");
 class DictionaryController {
   static async getAllWords(req, res) {
     try {
-      const words = await DictionaryService.getAllWords();
+      const words = await DictionaryService.getAllWords(req.user.id);
       if (words.length === 0)
         return res.json(formatResponse(200, "Слов нет"));
       return res.status(200).json(formatResponse(200, "Успешно", words));
