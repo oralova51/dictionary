@@ -7,36 +7,28 @@ import "./WordCard.css";
 import ModalEditWordForm from "../../entities/word/ui/ModalEditWordForm";
 import axiosInstance from "../../shared/lib/axiosInstance";
 
-export default function WordCard({ word, onSave }) {
+export default function WordCard({ word, onSave, onDelete }) {
   const [isWord, setIsWord] = useState(word);
   const [show, setShow] = useState(false);
 
   const updateHandler = async (updatedWord) => {
     try {
-      if (!word.id) return console.error("Нет ID слова!");
-
+      if (!word.id) return console.error("Нет такого слова!");
       const wordToSend = {
         word: updatedWord.word,
         description: updatedWord.description,
         tag: updatedWord.tag,
         userId: word.userId, // берём из текущего объекта
       };
-
       const response = await axiosInstance.put(
         `/api/dictionary/${word.id}`,
         wordToSend
       );
-      console.log("Ответ сервера:", response.data);
-
       setIsWord(response.data);
       onSave && onSave(response.data);
       setShow(false);
     } catch (error) {
       console.error("Ошибка при обновлении слова:", error);
-      if (error.response) {
-        console.log("Статус:", error.response.status);
-        console.log("Данные ошибки:", error.response.data);
-      }
     }
   };
 
@@ -73,7 +65,9 @@ export default function WordCard({ word, onSave }) {
               <Card.Link href="#" onClick={() => setShow((prev) => !prev)}>
                 Изменить
               </Card.Link>
-              <Card.Link href="#">Удалить</Card.Link>
+              <Card.Link href="#" onClick={onDelete}>
+                Удалить
+              </Card.Link>
             </div>
           </Card.Body>
         </Card>

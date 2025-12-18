@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import WordCard from "../widgets/WordCard/WordCard";
 import Row from "react-bootstrap/Row";
+import axiosInstance from "../shared/lib/axiosInstance";
 
 export default function WordsPage() {
   const [words, setWords] = useState([]);
@@ -25,6 +26,15 @@ export default function WordsPage() {
     }
   }
 
+  const deleteHandler = async (id) => {
+    try {
+      await axiosInstance.delete(`/api/dictionary/${id}`);
+      setWords(words.filter(word => word.id !== id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getWords();
   }, []);
@@ -33,7 +43,12 @@ export default function WordsPage() {
     <div>
       <Row>
         {words.map((obj) => (
-          <WordCard key={obj.id} word={obj} onSave={(updatedWord) => updateWord(updatedWord)}/>
+          <WordCard
+            key={obj.id}
+            word={obj}
+            onSave={(updatedWord) => updateWord(updatedWord)}
+            onDelete={() => deleteHandler(obj.id)} 
+          />
         ))}
       </Row>
     </div>
