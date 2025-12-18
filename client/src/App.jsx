@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router";
 import Layout from "./app/Layout/Layout";
 import MainPage from "./pages/MainPage";
+import WordsPage from "./pages/WordsPage";
 import AuthPage from "./pages/AuthPage";
 import axiosInstance, { setAccessToken } from "./shared/lib/axiosInstance";
 
@@ -27,6 +28,7 @@ function App() {
         <Routes>
           <Route element={<Layout user={user} setUser={setUser} />}>
             <Route path="/" element={<MainPage user={user} />} />
+            <Route path="/words" element={<WordsPage />} />
             <Route path="/registery" element={<AuthPage setUser={setUser} />} />
           </Route>
         </Routes>

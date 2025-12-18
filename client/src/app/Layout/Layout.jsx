@@ -1,5 +1,6 @@
 import React from "react";
 import { Outlet, useNavigate } from "react-router";
+import Navigation from "../../widgets/Navigation/Navigation";
 import Container from "react-bootstrap/Container";
 import { Button, Col, Row } from "react-bootstrap";
 import { LogOut } from "lucide-react";
@@ -20,6 +21,7 @@ export default function Layout({ user, setUser }) {
   return (
     <>
       <Container>
+        <Navigation />
         <Row>
           <Col sm={6}>
             <h1>Словарь разработчика</h1>
@@ -44,7 +46,6 @@ export default function Layout({ user, setUser }) {
             )}
           </Col>
         </Row>
-        <Outlet />
       </Container>
     </>
   );
