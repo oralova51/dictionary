@@ -37,6 +37,7 @@ class AuthController {
           accessToken,
         });
     } catch (error) {
+      console.log(error);
       return res.status(500).send(error);
     }
   }
@@ -70,6 +71,7 @@ class AuthController {
           accessToken,
         });
     } catch (error) {
+      console.log(error);
       return res.status(500).send(error);
     }
   }
@@ -78,6 +80,7 @@ class AuthController {
     try {
       return res.clearCookes().status(200).send('Выход выполнен/Logout success');
     } catch (error) {
+      console.log(error);
       return res.status(500).send(error);
     }
   }

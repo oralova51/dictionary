@@ -1,6 +1,7 @@
 export default class UserValidate {
   static validateEmail(email) {
     const emailPattern = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,}$/;
+
     return emailPattern.test(email);
   }
 

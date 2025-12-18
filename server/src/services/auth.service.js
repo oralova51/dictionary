@@ -4,7 +4,7 @@ class AuthService {
   static async signUp({ email, name, password }) {
     const [user, created] = await User.findOrCreate({
       where: { email },
-      default: { name, password },
+      defaults: { name, password },
     });
 
     return { user, created };
