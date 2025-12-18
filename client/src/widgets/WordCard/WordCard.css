@@ -1,0 +1,24 @@
+h1 {
+  text-align: center;
+}
+
+.words {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 10px;
+  margin: 15px;
+}
+
+.word {
+  padding: 10px;
+}
+
+.wordsButtons {
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+.desc{
+  min-height: 150px;
+}
