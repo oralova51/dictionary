@@ -8,14 +8,12 @@ import WordAddForm from "../widgets/WordAddForm";
 export default function WordsPage({ user }) {
   const [words, setWords] = useState([]);
   const [showForm, setShowForm] = useState(false);
-  console.log(user);
 
   async function getWords() {
     try {
       const response = await fetch(`${import.meta.env.VITE_API}/dictionary`);
       const data = await response.json();
       if (response.ok) setWords(data.data);
-      if(words.length === 0) console.log('Здесь пока нет слов, но ты можешь их добавить :)');
     } catch (error) {
       console.log(error);
     }
@@ -84,6 +82,7 @@ export default function WordsPage({ user }) {
 
   return (
   <>
+  {user.status !== 'guest' && (
   <Button
           style={{
             margin: "5px",
@@ -93,8 +92,8 @@ export default function WordsPage({ user }) {
           }}
           onClick={() => setShowForm((prev) => !prev)}
         >
-          {showForm ? "Закрыть форму" : "Добавить  новое слово"}
-        </Button>
+          {showForm ? "Закрыть форму" : "Добавить новое слово"}
+        </Button>)}
          {showForm && <WordAddForm submitHandler={submitHandler} />}
     {words.length === 0 ? (
       'Здесь пока нет слов, но ты можешь их добавить :)'
