@@ -28,7 +28,7 @@ function App() {
         <Routes>
           <Route element={<Layout user={user} setUser={setUser} />}>
             <Route path="/" element={<MainPage user={user} />} />
-            <Route path="/words" element={<WordsPage />} />
+            <Route path="/words" element={<WordsPage user={user}/>} />
             <Route path="/registery" element={<AuthPage setUser={setUser} />} />
           </Route>
         </Routes>

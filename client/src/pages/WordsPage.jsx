@@ -5,9 +5,10 @@ import axiosInstance from "../shared/lib/axiosInstance";
 import Button from "react-bootstrap/Button";
 import WordAddForm from "../widgets/WordAddForm";
 
-export default function WordsPage() {
+export default function WordsPage({ user }) {
   const [words, setWords] = useState([]);
   const [showForm, setShowForm] = useState(false);
+  console.log(user);
 
   async function getWords() {
     try {
@@ -37,7 +38,7 @@ export default function WordsPage() {
         word: dataForApi.word,
         description: dataForApi.description,
         tag: dataForApi.tag,
-        userId: 1, // пока беру моковую
+        userId: user.data?.id, // пока беру моковую
       };
       if (!dataForApi.word || !dataForApi.description || !dataForApi.tag)
         return alert("Заполните все поля");
@@ -65,7 +66,7 @@ export default function WordsPage() {
         word: updatedWord.word,
         description: updatedWord.description,
         tag: updatedWord.tag,
-        userId: 1, // пока мок
+        userId: user.data?.id, // пока мок
       });
 
       setWords((prev) =>

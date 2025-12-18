@@ -46,6 +46,7 @@ export default function Layout({ user, setUser }) {
             )}
           </Col>
         </Row>
+        <Outlet />
       </Container>
     </>
   );

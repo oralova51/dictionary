@@ -57,7 +57,7 @@ function SignUpForm({ setUser }) {
           type="submit"
           className={styles.submitButton}
           onClick={() => {
-            navigate(`/dictionary`);
+            navigate(`/words`);
           }}
         >
           Подтвердить

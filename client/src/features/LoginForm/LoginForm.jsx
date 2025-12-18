@@ -3,8 +3,11 @@ import styles from "./LoginForm.module.css";
 import UserValidate from "../../entities/user/api/UserValidate";
 import UserApi from "../../entities/user/api/UserApi";
 import { setAccessToken } from "../../shared/lib/axiosInstance";
+import { useNavigate } from "react-router";
 
 function LoginForm({ setUser }) {
+  const navigate = useNavigate();
+
   const loginHandler = async (event) => {
     try {
       event.preventDefault();
@@ -38,7 +41,13 @@ function LoginForm({ setUser }) {
           />
         </div>
 
-        <button type="submit" className={styles.submitButton}>
+        <button
+          type="submit"
+          className={styles.submitButton}
+          onClick={() => {
+            navigate(`/words`);
+          }}
+        >
           Подтвердить
         </button>
       </form>

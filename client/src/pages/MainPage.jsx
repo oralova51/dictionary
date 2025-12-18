@@ -1,10 +1,6 @@
 import React from "react";
-import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router";
 
 export default function MainPage({ user }) {
-  const navigate = useNavigate();
-
   return (
     <>
       <h2>
