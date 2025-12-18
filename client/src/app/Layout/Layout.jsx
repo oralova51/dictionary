@@ -21,7 +21,9 @@ export default function Layout({ user, setUser }) {
     <>
       <Container>
         <Row>
-          <Col sm={6}>Словарь разработчика версия 1.0.0</Col>
+          <Col sm={6}>
+            <h1>Словарь разработчика</h1>
+          </Col>
           <Col sm={2}></Col>
           <Col sm={4}>
             {user.status === "logged" ? (

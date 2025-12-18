@@ -7,10 +7,10 @@ export default function MainPage({ user }) {
 
   return (
     <>
-      <h1>
+      <h2>
         Добро пожаловать
         {user.status === "logged" ? `, ${user.data?.name}` : ``}!
-      </h1>
+      </h2>
       <p>
         <span>«Coding Wiki»</span> — персональный и при этом социальный словарь
         разработчика. Это веб-приложение, где ментор может легко сохранить
