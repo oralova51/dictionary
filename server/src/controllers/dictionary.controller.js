@@ -19,7 +19,7 @@ class DictionaryController {
     try {
       const { id } = req.params;
       const oneWord = await DictionaryService.getWordById(id);
-      if (!oneWord) return res.json(formatResponse(200, "Подарка нет"));
+      if (!oneWord) return res.json(formatResponse(200, "Такого слова нет"));
       return res.status(200).json(formatResponse(200, "Успешно", oneWord));
     } catch (error) {
       console.log(error);
