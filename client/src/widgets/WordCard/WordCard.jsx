@@ -1,45 +1,24 @@
 import React, { useState } from "react";
 import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/esm/Col";
 import Tags from "../../features/Tags/Tags";
 import "./WordCard.css";
 import ModalEditWordForm from "../../entities/word/ui/ModalEditWordForm";
 import axiosInstance from "../../shared/lib/axiosInstance";
 
-export default function WordCard({ word, onSave, onDelete }) {
+
+export default function WordCard({ word, onUpdate, onDelete }) {
   const [isWord, setIsWord] = useState(word);
   const [show, setShow] = useState(false);
 
-  const updateHandler = async (updatedWord) => {
-    try {
-      if (!word.id) return console.error("Нет такого слова!");
-      const wordToSend = {
-        word: updatedWord.word,
-        description: updatedWord.description,
-        tag: updatedWord.tag,
-        userId: word.userId, // берём из текущего объекта
-      };
-      const response = await axiosInstance.put(
-        `/api/dictionary/${word.id}`,
-        wordToSend
-      );
-      setIsWord(response.data);
-      onSave && onSave(response.data);
-      setShow(false);
-    } catch (error) {
-      console.error("Ошибка при обновлении слова:", error);
-    }
-  };
-
   return (
     <>
-      <ModalEditWordForm
+       <ModalEditWordForm
         show={show}
         setShow={setShow}
         isWord={isWord}
         setIsWord={setIsWord}
-        updateHandler={updateHandler}
+        onUpdate={onUpdate} 
       />
       <Col>
         <Card

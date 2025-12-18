@@ -10,12 +10,13 @@ export default function ModalEditWordForm({
   setShow,
   isWord,
   setIsWord,
-  updateHandler,
+  onUpdate,
 }) {
   // Сбор данных формы при submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateHandler(isWord); // передаем текущее состояние
+    onUpdate(isWord.id, isWord);
+    setShow(false);
   };
 
   return (
