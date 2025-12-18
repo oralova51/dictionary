@@ -2,64 +2,82 @@ import React, { useState } from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/esm/Col";
+import Tags from "../../features/Tags/Tags";
 import "./WordCard.css";
+import ModalEditWordForm from "../../entities/word/ui/ModalEditWordForm";
+import axiosInstance from "../../shared/lib/axiosInstance";
 
 export default function WordCard({ word, onSave }) {
-  const [isEditing, setIsEditing] = useState(false);
-  const [isWord, setIsWord] = useState(word.word);
-  const [isDescription, setIsDescription] = useState(word.description);
+  const [isWord, setIsWord] = useState(word);
+  const [show, setShow] = useState(false);
 
-  const edit = () => {
-    setIsEditing(true);
+  const updateHandler = async (updatedWord) => {
+    try {
+      if (!word.id) return console.error("Нет ID слова!");
+
+      const wordToSend = {
+        word: updatedWord.word,
+        description: updatedWord.description,
+        tag: updatedWord.tag,
+        userId: word.userId, // берём из текущего объекта
+      };
+
+      const response = await axiosInstance.put(
+        `/api/dictionary/${word.id}`,
+        wordToSend
+      );
+      console.log("Ответ сервера:", response.data);
+
+      setIsWord(response.data);
+      onSave && onSave(response.data);
+      setShow(false);
+    } catch (error) {
+      console.error("Ошибка при обновлении слова:", error);
+      if (error.response) {
+        console.log("Статус:", error.response.status);
+        console.log("Данные ошибки:", error.response.data);
+      }
+    }
   };
 
   return (
-    <Col>
-      <Card
-        style={{
-          width: "20rem",
-          height: "390px",
-          padding: "5px",
-          margin: "5px",
-        }}
-      >
-        <Card.Body>
-          <Card.Title
-            className="words"
-            style={{ justifyContent: "center", fontWeight: "bold" }}
-          >
-            {word.word}
-          </Card.Title>
-          {isEditing && (
-            <input placeholder="Можете редактировать слово"></input>
-          )}
-          <Card.Subtitle className="mb-2 text-muted word">
-            Описание термина
-          </Card.Subtitle>
-          {isEditing && <input placeholder="Отредактируйте описание"></input>}
-          <Card.Text>{word.description}</Card.Text>
-          <div className="wordsButtons">
-            <Card.Link href="#" onClick={edit}>
-              Изменить
-            </Card.Link>
-            <Card.Link href="#">Удалить</Card.Link>
-            <Card.Link href="#">Тег</Card.Link>
-            {isEditing && (
-              <form>
-                <label for="tag-select">Тен</label>
-                <select name="tag" id="tag-select">
-                  <option value="">-- Выберите тег --</option>
-                  <option value="green">Зеленый</option>
-                  <option value="blue">Синий</option>
-                  <option value="red">Красный</option>
-                  <option value="yellow">Желтый</option>
-                </select>
-              </form>
-            )}
-            {isEditing &&  <Button>Отправить</Button>}
-          </div>
-        </Card.Body>
-      </Card>
-    </Col>
+    <>
+      <ModalEditWordForm
+        show={show}
+        setShow={setShow}
+        isWord={isWord}
+        setIsWord={setIsWord}
+        updateHandler={updateHandler}
+      />
+      <Col>
+        <Card
+          style={{
+            width: "20rem",
+            padding: "5px",
+            margin: "5px",
+          }}
+        >
+          <Card.Body>
+            <Tags>Тег</Tags>
+            <Card.Title
+              className="words"
+              style={{ justifyContent: "center", fontWeight: "bold" }}
+            >
+              {word.word}
+            </Card.Title>
+            <Card.Subtitle className="mb-2 text-muted word">
+              Описание термина
+            </Card.Subtitle>
+            <Card.Text className="desc">{word.description}</Card.Text>
+            <div className="wordsButtons">
+              <Card.Link href="#" onClick={() => setShow((prev) => !prev)}>
+                Изменить
+              </Card.Link>
+              <Card.Link href="#">Удалить</Card.Link>
+            </div>
+          </Card.Body>
+        </Card>
+      </Col>
+    </>
   );
 }

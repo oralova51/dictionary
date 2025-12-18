@@ -15,6 +15,10 @@ h1 {
 }
 
 .wordsButtons {
-  margin-bottom: 5px;
-  padding-bottom: 5px;
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+.desc{
+  min-height: 150px;
 }
