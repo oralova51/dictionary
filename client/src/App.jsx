@@ -5,6 +5,7 @@ import Layout from "./app/Layout/Layout";
 import MainPage from "./pages/MainPage";
 import WordsPage from "./pages/WordsPage";
 import AuthPage from "./pages/AuthPage";
+import AccountPage from "./pages/AccountPage";
 import axiosInstance, { setAccessToken } from "./shared/lib/axiosInstance";
 
 function App() {
@@ -28,8 +29,12 @@ function App() {
         <Routes>
           <Route element={<Layout user={user} setUser={setUser} />}>
             <Route path="/" element={<MainPage user={user} />} />
-            <Route path="/words" element={<WordsPage user={user}/>} />
+            <Route path="/words" element={<WordsPage user={user} />} />
             <Route path="/registery" element={<AuthPage setUser={setUser} />} />
+            <Route
+              path="/account"
+              element={<AccountPage user={user} setUser={setUser} />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>

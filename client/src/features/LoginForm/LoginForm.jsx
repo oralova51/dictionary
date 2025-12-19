@@ -19,6 +19,7 @@ function LoginForm({ setUser }) {
 
       setUser({ status: "logged", data: res.user });
       setAccessToken(res.accessToken);
+      navigate(`/words`);
     } catch (error) {
       console.log(error);
     }
@@ -28,8 +29,14 @@ function LoginForm({ setUser }) {
     <div className={styles.container}>
       <form className={styles.form} onSubmit={loginHandler}>
         <div className={styles.inputGroup}>
-          <div className={styles.inputLabel}>Электронная почта</div>
-          <input className={styles.input} name="email" type="email" required />
+          <div className={styles.inputLabel}>Логин</div>
+          <input
+            className={styles.input}
+            name="email"
+            type="email"
+            placeholder="Введите e-mail"
+            required
+          />
         </div>
         <div className={styles.inputGroup}>
           <div className={styles.inputLabel}>Пароль</div>
@@ -37,6 +44,7 @@ function LoginForm({ setUser }) {
             className={styles.input}
             name="password"
             type="password"
+            placeholder="Введите пароль"
             required
           />
         </div>

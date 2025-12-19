@@ -26,6 +26,11 @@ function Navigation({ user, setUser }) {
         <Col>
           <Navbar.Brand href="/">Главная</Navbar.Brand>
           <Navbar.Brand href="/words">Словарь</Navbar.Brand>
+          {user?.data?.name ? (
+            <Navbar.Brand href="/account">Личный кабинет</Navbar.Brand>
+          ) : (
+            ``
+          )}
           <Navbar.Toggle />
         </Col>
         <Col sm={4}>
