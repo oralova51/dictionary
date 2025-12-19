@@ -13,7 +13,7 @@ export default function WordsPage({ user }) {
     try {
       const { data } = await axiosInstance(`/api/dictionary`);
 
-      if (data.statusCode === 200) setWords(data.data);
+      if (data.data) setWords(data.data);
     } catch (error) {
       console.log(error);
     }

@@ -3,16 +3,11 @@
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Dictionary extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      this.belongsTo(models.User, { foreignKey: 'userId' });
     }
 
-    static validate({ word, description, tag, userId }) {
+    static validate({ word, description }) {
       if (!word || typeof word !== 'string' || word.trim().length === 0) {
         return {
           isValid: false,
@@ -29,12 +24,7 @@ module.exports = (sequelize, DataTypes) => {
           err: 'Описание должно быть не пустой строкой',
         };
       }
-      // if (!tag || typeof tag !== 'string' || tag.trim().length === 0) {
-      //   return {
-      //     isValid: false,
-      //     err: 'Тег должен быть не пустой строкой',
-      //   };
-      // }
+
       return {
         isValid: true,
         err: null,
