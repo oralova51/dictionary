@@ -9,4 +9,4 @@ router.get("/:id", DictionaryController.getWordById);
 router.delete("/:id", DictionaryController.deleteWord);
 router.put("/:id", DictionaryController.updateWord);
 
-module.exports = router;
+module.exports = router; 
