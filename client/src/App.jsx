@@ -1,23 +1,40 @@
-import { useState, useEffect } from 'react'
+import "./App.css";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router";
-import './App.css'
-import WordsPage from './pages/WordsPage';
 import Layout from "./app/Layout/Layout";
-import MainPage from './pages/MainPage';
-
+import MainPage from "./pages/MainPage";
+import WordsPage from "./pages/WordsPage";
+import AuthPage from "./pages/AuthPage";
+import axiosInstance, { setAccessToken } from "./shared/lib/axiosInstance";
 
 function App() {
+  const [user, setUser] = useState({ status: "logging", data: null });
+
+  useEffect(() => {
+    axiosInstance("/api/auth/refreshToken")
+      .then(({ data }) => {
+        setUser({ status: "logged", data: data.user });
+        setAccessToken(data.accessToken);
+      })
+      .catch(() => {
+        setUser({ status: "guest", data: null });
+        setAccessToken("");
+      });
+  }, []);
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/words" element={<WordsPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  )
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Layout user={user} setUser={setUser} />}>
+            <Route path="/" element={<MainPage user={user} />} />
+            <Route path="/words" element={<WordsPage user={user}/>} />
+            <Route path="/registery" element={<AuthPage setUser={setUser} />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
 }
 
-export default App
+export default App;

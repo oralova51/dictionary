@@ -1,7 +1,7 @@
-const { Dictionary } = require("../../db/models");
+const { Dictionary } = require('../../db/models');
 class DictionaryService {
-  static async getAllWords() {
-    return Dictionary.findAll({ order: [["createdAt", "DESC"]] });
+  static async getAllWords(userId) {
+    return Dictionary.findAll({ where: { userId } }) 
   }
 
   static async getWordById(id) {

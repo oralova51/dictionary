@@ -1,7 +1,9 @@
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
+import { useState } from 'react';
 
-function Navigation() {
+function Navigation( {user}) {
+  
   return (
     <Navbar className="bg-body-tertiary">
       <Container>
@@ -9,7 +11,7 @@ function Navigation() {
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
-            Вы вошли как: <a href="#login">Вася Пупкин</a>
+            Вы вошли как: <a href="#login">{user?.data?.name ||"Гость"}</a>
           </Navbar.Text>
         </Navbar.Collapse>
       </Container>
