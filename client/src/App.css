@@ -15,8 +15,6 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-
-
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -36,6 +34,33 @@
   padding: 2em;
 }
 
+
+
+
 .read-the-docs {
-  color: #888;
+  color: #888888;
+}
+
+.navbar-brand {
+  position: relative;
+  display: inline-block;
+  font-weight: 800;
+  color: royalblue;
+  overflow: hidden;
+  background: linear-gradient(
+    to right,
+    midnightblue,
+    midnightblue 50%,
+    royalblue 50%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 100%;
+  background-position: 100%;
+  transition: background-position 125ms ease;
+}
+
+.navbar-brand:hover {
+  background-position: 0 100%;
 }

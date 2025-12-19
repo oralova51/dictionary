@@ -22,7 +22,9 @@ function Navigation({ user, setUser }) {
   return (
     <Navbar className="bg-body-tertiary">
       <Container>
-        <Col sm={3}>Coding Wiki</Col>
+        <Col sm={3} className="brand">
+          Coding Wiki
+        </Col>
         <Col>
           <Navbar.Brand href="/">Главная</Navbar.Brand>
           <Navbar.Brand href="/words">Словарь</Navbar.Brand>

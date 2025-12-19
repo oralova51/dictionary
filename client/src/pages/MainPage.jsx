@@ -3,11 +3,11 @@ import React from "react";
 export default function MainPage({ user }) {
   return (
     <>
-      <h2>
+      <h2 className="main-text-hello">
         Добро пожаловать
-        {user.status === "logged" ? `, ${user.data?.name}` : ``}!
+        {user.status === "logged" ? `, ${user.data?.name}` : ``}
       </h2>
-      <p>
+      <p className="main-text">
         <span>«Coding Wiki»</span> — персональный и при этом социальный словарь
         разработчика. Это веб-приложение, где ментор может легко сохранить
         объяснение сложного термина для своего подопечного, а джун — быстро
