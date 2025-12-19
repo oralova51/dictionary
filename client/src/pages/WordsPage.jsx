@@ -11,9 +11,9 @@ export default function WordsPage({ user }) {
 
   async function getWords() {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API}/dictionary`);
-      const data = await response.json();
-      if (response.ok) setWords(data.data);
+      const { data } = await axiosInstance(`/api/dictionary`);
+
+      if (data.statusCode === 200) setWords(data.data);
     } catch (error) {
       console.log(error);
     }
@@ -81,9 +81,9 @@ export default function WordsPage({ user }) {
   }, []);
 
   return (
-  <>
-  {user.status !== 'guest' && (
-  <Button
+    <>
+      {user.status !== "guest" && (
+        <Button
           style={{
             margin: "5px",
             padding: "5px",
@@ -93,25 +93,26 @@ export default function WordsPage({ user }) {
           onClick={() => setShowForm((prev) => !prev)}
         >
           {showForm ? "Закрыть форму" : "Добавить новое слово"}
-        </Button>)}
-         {showForm && <WordAddForm submitHandler={submitHandler} />}
-    {words.length === 0 ? (
-      'Здесь пока нет слов, но ты можешь их добавить :)'
-    ) : (
-      <>
-        <Row>
-          {words.map((obj) => (
-            <WordCard
-              key={obj.id}
-              word={obj}
-              onSave={(updatedWord) => updateWord(updatedWord)}
-              onDelete={() => deleteHandler(obj.id)}
-              onUpdate={updateHandler}
-            />
-          ))}
-        </Row>
-      </>
-    )}
-  </>
-);
+        </Button>
+      )}
+      {showForm && <WordAddForm submitHandler={submitHandler} />}
+      {words.length === 0 ? (
+        "Здесь пока нет слов, но ты можешь их добавить :)"
+      ) : (
+        <>
+          <Row>
+            {words.map((obj) => (
+              <WordCard
+                key={obj.id}
+                word={obj}
+                onSave={(updatedWord) => updateWord(updatedWord)}
+                onDelete={() => deleteHandler(obj.id)}
+                onUpdate={updateHandler}
+              />
+            ))}
+          </Row>
+        </>
+      )}
+    </>
+  );
 }
