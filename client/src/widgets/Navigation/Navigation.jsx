@@ -13,6 +13,7 @@ function Navigation({ user, setUser }) {
     try {
       await UserApi.logout();
       setUser({ status: "guest", data: null });
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
