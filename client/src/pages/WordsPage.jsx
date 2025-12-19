@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import axiosInstance from "../shared/lib/axiosInstance";
 import Button from "react-bootstrap/Button";
 import WordAddForm from "../widgets/WordAddForm";
+import Loader from "../shared/hocs/Loader";
 
 export default function WordsPage({ user }) {
   const [words, setWords] = useState([]);
@@ -75,43 +76,47 @@ export default function WordsPage({ user }) {
       console.error("Ошибка при обновлении слова:", error);
     }
   };
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   useEffect(() => {
     getWords();
   }, []);
 
   return (
-  <>
-  {user.status !== 'guest' && (
-  <Button
-          style={{
-            margin: "5px",
-            padding: "5px",
-            position: "absolute",
-            right: "20px",
-          }}
-          onClick={() => setShowForm((prev) => !prev)}
-        >
-          {showForm ? "Закрыть форму" : "Добавить новое слово"}
-        </Button>)}
-         {showForm && <WordAddForm submitHandler={submitHandler} />}
-    {words.length === 0 ? (
-      'Здесь пока нет слов, но ты можешь их добавить :)'
-    ) : (
-      <>
-        <Row>
-          {words.map((obj) => (
-            <WordCard
-              key={obj.id}
-              word={obj}
-              onSave={(updatedWord) => updateWord(updatedWord)}
-              onDelete={() => deleteHandler(obj.id)}
-              onUpdate={updateHandler}
-            />
-          ))}
-        </Row>
-      </>
-    )}
-  </>
-);
+    <>
+      <Loader isLoading={words.length === 0}>
+        {user.status !== "guest" && (
+          <Button
+            style={{
+              margin: "5px",
+              padding: "5px",
+              position: "absolute",
+              right: "20px",
+            }}
+            onClick={() => setShowForm((prev) => !prev)}
+          >
+            {showForm ? "Закрыть форму" : "Добавить новое слово"}
+          </Button>
+        )}
+        {showForm && <WordAddForm submitHandler={submitHandler} />}
+        {words.length === 0 ? (
+          "Здесь пока нет слов, но ты можешь их добавить :)"
+        ) : (
+          <>
+            <Row>
+              {words.map((obj) => (
+                <WordCard
+                  key={obj.id}
+                  word={obj}
+                  onSave={(updatedWord) => updateWord(updatedWord)}
+                  onDelete={() => deleteHandler(obj.id)}
+                  onUpdate={updateHandler}
+                />
+              ))}
+            </Row>
+          </>
+        )}
+      </Loader>
+    </>
+  );
 }
