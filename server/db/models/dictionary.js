@@ -29,12 +29,12 @@ module.exports = (sequelize, DataTypes) => {
           err: 'Описание должно быть не пустой строкой',
         };
       }
-      if (!tag || typeof tag !== 'string' || tag.trim().length === 0) {
-        return {
-          isValid: false,
-          err: 'Тег должен быть не пустой строкой',
-        };
-      }
+      // if (!tag || typeof tag !== 'string' || tag.trim().length === 0) {
+      //   return {
+      //     isValid: false,
+      //     err: 'Тег должен быть не пустой строкой',
+      //   };
+      // }
       return {
         isValid: true,
         err: null,
@@ -46,8 +46,19 @@ module.exports = (sequelize, DataTypes) => {
     {
       word: DataTypes.STRING,
       description: DataTypes.TEXT,
-      tag: DataTypes.STRING,
       userId: DataTypes.INTEGER,
+      tags: {
+        type: DataTypes.ARRAY(DataTypes.TEXT),
+        defaultValue: [],
+        get() {
+          const rawValue = this.getDataValue('tags');
+          return rawValue || [];
+        },
+        set(value) {
+          const uniqueTags = [...new Set(value)];
+          this.setDataValue('tags', uniqueTags);
+        },
+      },
     },
     {
       sequelize,
