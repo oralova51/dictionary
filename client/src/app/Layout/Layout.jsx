@@ -21,7 +21,7 @@ export default function Layout({ user, setUser }) {
   return (
     <>
       <Container>
-        <Navigation />
+        <Navigation user={user}/>
         <Row>
           <Col sm={6}>
             <h1>Словарь разработчика</h1>
