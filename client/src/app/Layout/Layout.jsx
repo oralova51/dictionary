@@ -7,8 +7,8 @@ import Footer from "../../widgets/Footer/Footer";
 export default function Layout({ user, setUser }) {
   return (
     <div className="layout-container">
-      <Container>
         <Navigation user={user} setUser={setUser} />
+      <Container>
         <Outlet />
       </Container>
       <Footer />

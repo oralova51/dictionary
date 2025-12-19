@@ -5,6 +5,7 @@ import { Card, Col } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import UserApi from "../entities/user/api/UserApi";
 import EditUserForm from "../features/EditUserForm/EditUserForm";
+import Loader from "../shared/hocs/Loader";
 
 export default function AccountPage({ user, setUser }) {
   const navigate = useNavigate();
@@ -22,22 +23,24 @@ export default function AccountPage({ user, setUser }) {
 
   return (
     <>
-      {show ? (
-        <EditUserForm setUser={setUser} />
-      ) : (
-        <Card>
-          <Col className="mb-8">Имя: {user?.data?.name}</Col>
-          <Col className="mb-8">E-mail: {user?.data?.email}</Col>
-          <Col className="mb-4">
-            <Button onClick={() => setShow((prev) => !prev)}>
-              <UserPen />
-            </Button>
-            <Button onClick={logoutHandler}>
-              <LogOut />
-            </Button>
-          </Col>
-        </Card>
-      )}
+      <Loader isLoading={!user.data}>
+        {show ? (
+          <EditUserForm setUser={setUser} />
+        ) : (
+          <Card>
+            <Col className="mb-8">Имя: {user?.data?.name}</Col>
+            <Col className="mb-8">E-mail: {user?.data?.email}</Col>
+            <Col className="mb-4">
+              <Button onClick={() => setShow((prev) => !prev)}>
+                <UserPen />
+              </Button>
+              <Button onClick={logoutHandler}>
+                <LogOut />
+              </Button>
+            </Col>
+          </Card>
+        )}
+      </Loader>
     </>
   );
 }
