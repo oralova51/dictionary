@@ -4,6 +4,8 @@ import Row from "react-bootstrap/Row";
 import axiosInstance from "../shared/lib/axiosInstance";
 import Button from "react-bootstrap/Button";
 import WordAddForm from "../widgets/WordAddForm";
+import Loader from "../shared/hocs/Loader";
+import { ExternalLink } from "lucide-react";
 
 export default function WordsPage({ user }) {
   const [words, setWords] = useState([]);
@@ -37,7 +39,7 @@ export default function WordsPage({ user }) {
         word: dataForApi.word,
         description: dataForApi.description,
         tag: dataForApi.tag,
-        userId: user.data?.id, // пока беру моковую
+        userId: user.data?.id,
       };
       if (!dataForApi.word || !dataForApi.description || !dataForApi.tag)
         return alert("Заполните все поля");
@@ -64,8 +66,8 @@ export default function WordsPage({ user }) {
       const response = await axiosInstance.put(`/api/dictionary/${id}`, {
         word: updatedWord.word,
         description: updatedWord.description,
-        tag: updatedWord.tag,
-        userId: user.data?.id, // пока мок
+        tags: updatedWord.tag,
+        userId: user.data?.id,
       });
 
       setWords((prev) =>
@@ -75,6 +77,7 @@ export default function WordsPage({ user }) {
       console.error("Ошибка при обновлении слова:", error);
     }
   };
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   useEffect(() => {
     getWords();
@@ -82,37 +85,51 @@ export default function WordsPage({ user }) {
 
   return (
     <>
-      {user.status !== "guest" && (
+      <Loader isLoading={words.length === 0}>
+        {user.status !== "guest" && (
+          <Button
+            style={{
+              margin: "5px",
+              padding: "5px",
+              position: "absolute",
+              right: "20px",
+            }}
+            onClick={() => setShowForm((prev) => !prev)}
+          >
+            {showForm ? "Закрыть форму" : "Добавить новое слово"}
+          </Button>
+        )}
         <Button
           style={{
             margin: "5px",
             padding: "5px",
             position: "absolute",
             right: "20px",
+            top: "150px",
+            color: "#1bd317",
           }}
-          onClick={() => setShowForm((prev) => !prev)}
         >
-          {showForm ? "Закрыть форму" : "Добавить новое слово"}
+          Поделиться словарём <ExternalLink />
         </Button>
-      )}
-      {showForm && <WordAddForm submitHandler={submitHandler} />}
-      {words.length === 0 ? (
-        "Здесь пока нет слов, но ты можешь их добавить :)"
-      ) : (
-        <>
-          <Row>
-            {words.map((obj) => (
-              <WordCard
-                key={obj.id}
-                word={obj}
-                onSave={(updatedWord) => updateWord(updatedWord)}
-                onDelete={() => deleteHandler(obj.id)}
-                onUpdate={updateHandler}
-              />
-            ))}
-          </Row>
-        </>
-      )}
+        {showForm && <WordAddForm submitHandler={submitHandler} />}
+        {words.length === 0 ? (
+          "Здесь пока нет слов, но ты можешь их добавить :)"
+        ) : (
+          <>
+            <Row>
+              {words.map((obj) => (
+                <WordCard
+                  key={obj.id}
+                  word={obj}
+                  onSave={(updatedWord) => updateWord(updatedWord)}
+                  onDelete={() => deleteHandler(obj.id)}
+                  onUpdate={updateHandler}
+                />
+              ))}
+            </Row>
+          </>
+        )}
+      </Loader>
     </>
   );
 }
