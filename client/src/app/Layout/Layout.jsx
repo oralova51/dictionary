@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet, useNavigate } from "react-router";
 import Navigation from "../../widgets/Navigation/Navigation";
 import Container from "react-bootstrap/Container";
+import Footer from "../../widgets/Footer/Footer";
 import { Button, Col, Row } from "react-bootstrap";
 import { LogOut } from "lucide-react";
 import UserApi from "../../entities/user/api/UserApi";
@@ -19,7 +20,7 @@ export default function Layout({ user, setUser }) {
   };
 
   return (
-    <>
+    <div className="layout-container">
       <Container>
         <Navigation user={user}/>
         <Row>
@@ -48,6 +49,7 @@ export default function Layout({ user, setUser }) {
         </Row>
         <Outlet />
       </Container>
-    </>
+      <Footer />
+    </div>
   );
 }
