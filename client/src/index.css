@@ -4,7 +4,7 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  color: rgba(255, 255, 255, 0.871);
   background-color: #242424;
 
   font-synthesis: none;
@@ -22,13 +22,37 @@ a:hover {
   color: #535bf2;
 }
 
-body {
-  margin: 0;
+.layout-container {
+  padding-top: 22px;
   display: flex;
-  place-items: center;
-  min-width: 320px;
+  flex-direction: column;
   min-height: 100vh;
 }
+
+footer {
+  border-top: 1px solid rgb(128, 128, 128);
+  color: rgba(0, 0, 0, 0.6);
+  margin-top: auto;
+  background-color: rgba(224, 243, 255, 0.161);
+  padding: 10px;
+}
+
+.main-text-hello {
+  padding-top: 30vh
+}
+
+.main-text {
+  padding: 30px 20px 20px 20px;
+}
+
+body {
+  display: flex;
+  min-width: 320px;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+
 
 h1 {
   font-size: 3.2em;

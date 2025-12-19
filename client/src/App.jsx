@@ -1,35 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router";
+import Layout from "./app/Layout/Layout";
+import MainPage from "./pages/MainPage";
+import WordsPage from "./pages/WordsPage";
+import AuthPage from "./pages/AuthPage";
+import AccountPage from "./pages/AccountPage";
+import axiosInstance, { setAccessToken } from "./shared/lib/axiosInstance";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [user, setUser] = useState({ status: "logging", data: null });
+
+  useEffect(() => {
+    axiosInstance("/api/auth/refreshToken")
+      .then(({ data }) => {
+        setUser({ status: "logged", data: data.user });
+        setAccessToken(data.accessToken);
+      })
+      .catch(() => {
+        setUser({ status: "guest", data: null });
+        setAccessToken("");
+      });
+  }, []);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Layout user={user} setUser={setUser} />}>
+            <Route path="/" element={<MainPage user={user} />} />
+            <Route path="/words" element={<WordsPage user={user} />} />
+            <Route path="/registery" element={<AuthPage setUser={setUser} />} />
+            <Route
+              path="/account"
+              element={<AccountPage user={user} setUser={setUser} />}
+            />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
