@@ -4,14 +4,13 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  color: rgba(255, 255, 255, 0.871);
   background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
 }
 
 a {
@@ -31,18 +30,29 @@ a:hover {
 }
 
 footer {
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  border-top: 1px solid rgb(128, 128, 128);
   color: rgba(0, 0, 0, 0.6);
   margin-top: auto;
-  background-color: rgba(76, 116, 156, 0.156);
+  background-color: rgba(224, 243, 255, 0.161);
   padding: 10px;
 }
 
+.main-text-hello {
+  padding-top: 30vh
+}
+
+.main-text {
+  padding: 30px 20px 20px 20px;
+}
+
 body {
+  display: flex;
   min-width: 320px;
   min-height: 100vh;
   flex-direction: column;
 }
+
+
 
 h1 {
   font-size: 3.2em;
